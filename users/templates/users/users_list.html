@@ -1,0 +1,44 @@
+{% extends 'blog/base.html' %}
+{% load bootstrap4 %}
+
+{% block content %}
+<script>
+    function addSub(user_id, counter) {
+    $.ajax({
+            url:  '/posts/add_sub_ajax/',
+            type:  'POST',
+            data: {csrfmiddlewaretoken: '{{csrf_token}}','author_id': user_id},
+            dataType:  'json',
+            success: function(data) {
+              if(data.subbed == true) {
+                $('.add_sub' + counter).html('Подписаться');
+              }
+              else {
+                $('.add_sub' + counter).html('Отписаться');
+              }
+                                    }
+          })
+                      };
+    </script>
+<br>
+<ul class="list-group">
+
+{% for userr in object_list %}
+<div>
+    <li class="list-group-item">
+    <a href= '{% url 'user_page' userr %}' class="btn btn-light btn-sm" style= "background-color: #7fb3d5; color:white" >{{userr.username}}</a>
+    {% if request.user not in userr.blog.subscriber.all  %}
+    <button class='add_sub{{ forloop.counter }} btn btn-sm' onclick='addSub({{userr.id}}, {{forloop.counter}})' id='add_sub{{forloop.counter}}'>Подписаться</button>
+    {% else %}
+    <button class='add_sub{{ forloop.counter }} btn btn-sm' onclick='addSub({{userr.id}}, {{forloop.counter}})' id='add_sub{{forloop.counter}}'>Отписаться</button>
+    {% endif %}
+    </li>
+
+</div>
+{% endfor %}
+
+
+</ul>
+<br>
+
+{% endblock content %}

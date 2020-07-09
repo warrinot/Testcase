@@ -1,0 +1,40 @@
+{% extends 'blog/base.html' %}
+{% load bootstrap4 %}
+
+{% block title %} Пост {{post.title}} {% endblock %}
+
+{% block header %}
+<br>
+<h4>
+    <a class="btn btn-light" href="{% url 'post_create' %}" role="button" style= "background-color: #7fb3d5; color:white">Добавить пост</a>
+</h4>
+{% endblock header %}
+
+
+{% block content %}
+
+<div class="card" style="max-width: 65em;">
+  <div class="card-header">
+
+     <a href= '{% url 'user_page' object.blog.user %}' class="btn btn-light btn-sm" style= "background-color: #7fb3d5; color:white" >{{object.blog.user}}</a>
+    {{ post.date_added|date:'M d, Y H:i' }}
+
+    <br>
+    <a href="{% url 'post_detail' object.id %}">{{post.title}}</a>
+
+    {% if post.blog.user == request.user %}
+    <a href="{% url 'post_update' object.id %}" class="btn btn-light btn-sm" style= "background-color: #7fb3d5; color:white">редактировать</a>
+    <a href="{% url 'post_delete' object.id %}" class="btn btn-light btn-sm" style= "background-color: #7fb3d5; color:white">удалить</a>
+    {% endif %}
+    <a href="{% url 'make_seen' object.id %}">Отметить прочитано</a>
+
+
+  </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item">{{object.text|linebreaks }}</li>
+  </ul>
+
+</div>
+<br>
+
+{% endblock content %}

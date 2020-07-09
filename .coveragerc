@@ -1,0 +1,14 @@
+[run]
+    omit =
+     */venv/*
+     */migrations/*
+      */__init__.py
+      manage.py
+      */apps.py
+      */asgi.py
+      */wsgi.py
+      */tests.py
+<<<<<<< HEAD
+
+=======
+>>>>>>> fb141a8c4361402bf26557cfc88b0abbd3adf8cd

@@ -1,0 +1,15 @@
+{% extends 'blog/base.html' %}
+
+{% block title %} Удаление записи {% endblock %}
+
+{% block content %}
+<br>
+<h2>Удалить запись?</h2>
+<form  method="post">
+{% csrf_token %}
+Вы уверены, что хотите удалить запись?
+<input  type="submit" class ='btn btn-light btn-sm' style= "background-color: #7fb3d5; color:white" value="удалить"  />
+</form>
+
+
+{% endblock content %}

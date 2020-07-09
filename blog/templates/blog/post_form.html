@@ -1,0 +1,21 @@
+{% extends 'blog/base.html' %}
+
+{% load crispy_forms_tags %}
+{% load bootstrap4 %}
+
+{% block title %} Создание нового поста {% endblock %}
+{% block header %}
+  <h2>Новый пост</h2>
+{% endblock header %}
+
+
+{% block content %}
+
+<form  method='post' enctype="multipart/form-data" style ="width: 34em">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        <button name='submit' class="btn " style='background-color:#7fb3d5; color:white'>Отправить</button>
+</form>
+
+
+{% endblock content %}
