@@ -1,0 +1,64 @@
+{% extends 'blog/base.html' %}
+{% load bootstrap4 %}
+{% load static %}
+
+
+{% block title %} Все записи {% endblock %}
+
+{% block header %}
+<br>
+<h4>
+    <a class="btn btn-light" href="{% url 'post_create' %}" role="button" style= "background-color: #7fb3d5; color:white">Добавить запись</a>
+</h4>
+{% endblock header %}
+
+{% block content %}
+{% block js %}
+
+{% endblock js %}
+{% include "blog/pagination.html" with page=page_obj position='top_search' %}
+{% for post in object_list %}
+
+
+<div class="card post_{{ forloop.counter }}" style="max-width: 65em;">
+  <div class="card-header">
+
+    <a href= '{% url 'user_page' post.blog.user %}' class="btn btn-light btn-sm" style= "background-color: #7fb3d5; color:white" >{{post.blog.user}}</a>
+    {{ post.date_added|date:'M d, Y H:i' }}
+    {% if post.blog.user == request.user or request.user.is_staff %}
+    <a href="{% url 'post_update' post.id %}" class="btn btn-light btn-sm" style= "background-color: #7fb3d5; color:white">редактировать</a>
+    <a href="{% url 'post_delete' post.id %}" class="btn btn-light btn-sm" style= "background-color: #7fb3d5; color:white">удалить</a>
+    {% endif %}
+    <br>
+    <a style='color: #619BC2' href="{% url 'post_detail' post.id %}">{{post.title}}</a>
+
+
+
+
+
+
+  </div>
+  <ul class="list-group list-group-flush">
+    <li id='readmore' class="list-group-item">
+      {% autoescape off %}
+      {{ post.text|linebreaks|truncatewords:30 }}
+      {% ifnotequal post.text|truncatewords_html:30|length  post.text|truncatewords_html:31|length %}
+
+          <a style='color:#619BC2' href="{% url 'post_detail' post.id %}">Читать далее</a>
+
+      {% endifnotequal %}
+      {% endautoescape %}
+    </li>
+  </ul>
+
+</div>
+
+<br>
+
+{% empty %}
+        Записей  нет
+{% endfor %}
+
+
+{% include "blog/pagination.html" with page=page_obj position='bottom search'%}
+{% endblock content %}

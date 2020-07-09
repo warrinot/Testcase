@@ -1,0 +1,11 @@
+__pycache__/
+db.sqlite3
+migrations/
+cred.py
+static/
+htmlcov/
+README.md
+command.txt
+blog.json
+setup_test_data
+venv/
