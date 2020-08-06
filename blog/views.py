@@ -53,7 +53,7 @@ def personal_feed(request):
 
 
 class PostDraftView(ListView):
-    paginate_by = 10
+    paginate_by = PAGINATE
 
     def get_queryset(self):
         return Post.objects.filter(blog=self.request.user.blog).filter(
