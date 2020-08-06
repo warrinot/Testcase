@@ -74,7 +74,7 @@ class CreateNewPostTest(TestCase):
         self.valid_payload = {
             'title': 'Test title',
             'text': 'Test text',
-            'blog': int(user.blog.id)
+            'blog': user.blog.id
         }
         self.invalid_payload = {
             'title': '',
