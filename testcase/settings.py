@@ -25,7 +25,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['147.78.65.45', '0.0.0.0']
+ALLOWED_HOSTS = ['warrinot.ml']
 
 
 # Application definition
