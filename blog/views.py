@@ -127,7 +127,6 @@ class UserPostPage(ListView):
 
 def user_post_page(request, user_id):
     posts = Post.objects.filter(blog__user__id=user_id)
-    print(posts)
     return render(request, 'blog/user_page.html', {'object_list': posts})
 
 
