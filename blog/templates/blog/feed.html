@@ -5,7 +5,7 @@
 {% block header %}
 <br>
 <h4>
-    <a class="btn btn-light" href="{% url 'post_create' %}" role="button" style= "background-color: #7fb3d5; color:white">Добавить запись</a>
+    <a class="btn btn-light" href="{% url 'post_create' %}" role="button" >Добавить запись</a>
 </h4>
 {% endblock header %}
 
@@ -15,32 +15,27 @@
 {% for post in all_posts %}
 
 
-<div class="card" style="max-width: 65em;">
+<div class="card">
   <div class="card-header">
 
 
-    <a href= '{% url 'user_page' post.blog.user %}' class="btn btn-light btn-sm" style= "background-color: #7fb3d5; color:white" >{{post.blog.user}}</a>
+    <a href= '{% url "user_page" post.blog.user %}' class="btn btn-light btn-sm" >{{post.blog.user}}</a>
     {{ post.date_added|date:'M d, Y H:i' }}
-    <a href="{% url 'make_seen' post.id %}">Отметить прочитано</a>
+    <a class="post_title" href="{% url 'make_seen' post.id %}">Отметить прочитано</a>
     {% if post.blog.user == request.user or request.user.is_staff %}
-    <a href="{% url 'post_update' post.id %}" class="btn btn-light btn-sm" style= "background-color: #7fb3d5; color:white">редактировать</a>
-    <a href="{% url 'post_delete' post.id %}" class="btn btn-light btn-sm" style= "background-color: #7fb3d5; color:white">удалить</a>
+    <a href="{% url 'post_update' post.id %}" class="btn btn-light btn-sm" >редактировать</a>
+    <a href="{% url 'post_delete' post.id %}" class="btn btn-light btn-sm" >удалить</a>
     {% endif %}
 
     <br>
-    <a href="{% url 'post_detail' post.id %}">{{post.title}}</a>
-
-
-
-
-
+    <a class="post_title" href="{% url 'post_detail' post.id %}">{{post.title}}</a>
 
   </div>
   <ul class="list-group list-group-flush">
     <li class="list-group-item"> {{ post.text|linebreaks|truncatewords:30 }}
       {% ifnotequal post.text|truncatewords_html:30|length  post.text|truncatewords_html:31|length %}
 
-          <a href="{% url 'post_detail' post.id %}">Читать далее</a>
+          <a class="post_title" href="{% url 'post_detail' post.id %}">Читать далее</a>
 
       {% endifnotequal %}
     </li>

@@ -4,8 +4,7 @@
 
 {% block header %}
 <br>
-
-<h4>Все посты пользователя <a href= '{% url 'user_page' owner %}' class="btn btn-light btn-sm" style= "background-color: #7fb3d5; color:white" >{{owner}}</a>
+<h4>Все посты пользователя <a href= "{% url 'user_page' owner %}" class="btn btn-light btn-sm">{{owner}}</a>
     <p>
     {% if request.user not in blog.subscriber.all %}
     <a class='add_sub btn btn-sm' onclick='addSub()' href='#' id='add_sub'>Подписаться</a>
@@ -41,40 +40,32 @@
 {% for post in object_list %}
 
 
-<div class="card" style="max-width: 65em;">
+<div class="card">
   <div class="card-header">
-    <a href="{% url 'post_detail' post.id %}">{{post.title}}</a>
     
-    <p>
-
-      {{ post.date_added|date:'M d, Y H:i' }}
-
-      {% if post.blog == request.user.blog %}
-      <a href="{% url 'post_update' post.id %}" class="btn btn-light btn-sm" style= "background-color: #7fb3d5; color:white">редактировать</a>
-      <a href="{% url 'post_delete' post.id %}" class="btn btn-light btn-sm" style= "background-color: #7fb3d5; color:white">удалить</a>
-      {% endif %}
-    </p>
-
+      <p>
+        {{ post.date_added|date:'M d, Y H:i' }}
+        {% if post.blog == request.user.blog %}
+          <a href="{% url 'post_update' post.id %}" class="btn btn-light btn-sm" >редактировать</a>
+          <a href="{% url 'post_delete' post.id %}" class="btn btn-light btn-sm" >удалить</a>
+        {% endif %}
+      </p>
+      <a class="post_title"href="{% url 'post_detail' post.id %}">{{post.title}}</a>  
   </div>
+
   <ul class="list-group list-group-flush">
     <li class="list-group-item"> {{ post.text|linebreaks|truncatewords:30 }} 
       {% ifnotequal post.text|truncatewords_html:30|length  post.text|truncatewords_html:31|length %}
-        
-          <a href="{% url 'post_detail' post.id %}">Читать далее</a>
-        
+          <a href="{% url 'post_detail' post.id %}">Читать далее</a>        
       {% endifnotequal %}
     </li>
   </ul>
 
 </div>
 <br>
-
 {% empty %}
         Записей  нет
 {% endfor %}
-
-
-
 {% endblock content %}
 
 

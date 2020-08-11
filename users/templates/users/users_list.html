@@ -26,11 +26,11 @@
 {% for userr in object_list %}
 <div>
     <li class="list-group-item">
-    <a href= '{% url 'user_page' userr %}' class="btn btn-light btn-sm" style= "background-color: #7fb3d5; color:white" >{{userr.username}}</a>
+    <a href= '{% url "user_page" userr %}' class="btn btn-light btn-sm" style= "background-color: #7fb3d5; color:white" >{{userr.username}}</a>
     {% if request.user not in userr.blog.subscriber.all  %}
-    <button class='add_sub{{ forloop.counter }} btn btn-sm' style="float:right;" onclick='addSub({{userr.id}}, {{forloop.counter}})' id='add_sub{{forloop.counter}}'>Подписаться</button>
+    <button class="add_sub{{ forloop.counter }} btn btn-sm sub" onclick="addSub({{userr.id}}, {{forloop.counter}})" id='add_sub{{forloop.counter}}'>Подписаться</button>
     {% else %}
-    <button class='add_sub{{ forloop.counter }} btn btn-sm' style="float:right;" onclick='addSub({{userr.id}}, {{forloop.counter}})' id='add_sub{{forloop.counter}}'>Отписаться</button>
+    <button class='add_sub{{ forloop.counter }} btn btn-sm sub' onclick='addSub({{userr.id}}, {{forloop.counter}})' id='add_sub{{forloop.counter}}'>Отписаться</button>
     {% endif %}
     </li>
 
