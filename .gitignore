@@ -8,3 +8,6 @@ command.txt
 blog.json
 setup_test_data
 venv/
+static/admin/
+static/rest_framework/
+
