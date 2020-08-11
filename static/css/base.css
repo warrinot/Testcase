@@ -1,0 +1,44 @@
+.navbar {
+    background-color: #7fb3d5;
+}
+.navbar-brand {
+    margin-right: 5rem;
+}
+.navbar-brand a {
+    color:white;
+}
+.btn-light {
+    background-color: #7fb3d5;
+    color:white;
+}
+.card {
+    max-width: 65em;
+}
+.page-link {
+    color:#7fb3d5;
+}
+.arrow-dis {
+    color:#212529;
+}
+.page-current {
+    background-color: #7fb3d5!important;
+    border-color:#7fb3d5!important;
+    color:white!important;
+}
+
+.form-pagination {
+    margin-left:5px;
+    margin-right:5px;
+    width:60px;
+}
+.post-form {
+    max-width: 30em;
+    margin-left: 1em;
+    margin-top: 3em;
+}
+.post_title {
+    color: #619BC2;
+}
+.sub {
+    float:right;
+}
