@@ -41,7 +41,7 @@ class GetAllPostsTest(TestCase):
         # get data from db
         posts = Post.objects.all()
         serializer = PostSerializer(posts, many=True)
-        self.assertEqual(response.data, serializer.data)
+        self.assertEqual(response.data['results'], serializer.data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
 
@@ -122,7 +122,6 @@ class UpdateSinglePostTest(TestCase):
         response = client.put(reverse('post-detail', kwargs={'pk': self.post2.pk}),
                               data=json.dumps(self.valid_payload),
                               content_type='application/json')
-        self.post2.refresh_from_db()
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_invalid_update_post(self):
