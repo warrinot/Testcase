@@ -1,4 +1,3 @@
-# from django.shortcuts import render
 from django.urls import reverse_lazy
 from .models import Post, Blog
 from django.views.generic import ListView, DetailView
@@ -155,46 +154,3 @@ def test_auth(request):
     user = authenticate(username='test@test.com', password='12345678aA')
     login(request, user)
     return redirect('post_list')
-
-
-# API views
-@api_view(['GET', 'DELETE', 'PUT'])
-def get_delete_update_post(request, pk):
-    try:
-        post = Post.objects.get(pk=pk)
-    except Post.DoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
-
-    # get details of a single post
-    if request.method == 'GET':
-        serializer = PostSerializer(post)
-        return Response(serializer.data)
-    elif request.method == 'DELETE':
-        post.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
-    elif request.method == 'PUT':
-        serializer = PostSerializer(post, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_204_NO_CONTENT)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-@api_view(['GET', 'POST'])
-def get_post_posts(request):
-    # get all posts
-    if request.method == 'GET':
-        posts = Post.objects.all()
-        serializer = PostSerializer(posts, many=True)
-        return Response(serializer.data)
-    elif request.method == 'POST':
-        data = {
-            'title': request.data.get('title'),
-            'text': request.data.get('text'),
-            'blog': request.data.get('blog'),
-        }
-        serializer = PostSerializer(data=data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

@@ -15,9 +15,8 @@ urlpatterns = [
     path('post/<int:post_id>/make_seen/', views.make_post_seen, name='make_seen'),
     path('posts/draft/', login_required(views.PostDraftView.as_view()), name='draft_posts'),
     path('posts/add_sub_ajax/', views.add_sub_ajax, name='add_sub_ajax'),
-    # API urls
-    path('api/v1/posts/<int:pk>', views.get_delete_update_post, name='get_delete_update_post'),
-    path('api/v1/posts/', views.get_post_posts, name='get_post_posts'),
     path('test_auth/', views.test_auth, name='test_auth'),
+
+   
 
 ]
