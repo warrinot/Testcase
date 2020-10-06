@@ -6,10 +6,6 @@ from django.shortcuts import get_object_or_404, redirect
 from django.contrib.auth import get_user_model
 from django.http import Http404
 from django.http import HttpResponseRedirect
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
-from rest_framework import status
-from .serializers import PostSerializer
 from django.contrib.auth import authenticate, login
 from django.http import JsonResponse
 from django.shortcuts import render

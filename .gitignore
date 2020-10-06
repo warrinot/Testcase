@@ -1,6 +1,5 @@
 __pycache__/
 db.sqlite3
-migrations/
 cred.py
 htmlcov/
 README.md
@@ -10,4 +9,3 @@ setup_test_data
 venv/
 static/admin/
 static/rest_framework/
-

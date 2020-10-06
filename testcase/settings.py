@@ -154,6 +154,6 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 10,
 }
 if not os.environ.get('DJANGO_PRODUCTION') == 'True':
-    from .settings_dev import *  # or specific overrides
+    from .settings_dev import *
 else:
     pass
