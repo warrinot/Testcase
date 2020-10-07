@@ -4,7 +4,7 @@
 
 {% block header %}
 <br>
-<h4>Все посты пользователя <a href= "{% url 'user_page' owner %}" class="btn btn-light btn-sm">{{owner}}</a>
+<h4>Все посты пользователя <a href= "{% url 'user_page' blog.id %}" class="btn btn-light btn-sm">{{ blog }}</a>
     <p>
     {% if request.user not in blog.subscriber.all %}
     <a class='add_sub btn btn-sm' onclick='addSub()' href='#' id='add_sub'>Подписаться</a>
@@ -17,7 +17,7 @@
     $.ajax({
             url:  '/posts/add_sub_ajax/',
             type:  'POST',
-            data: {csrfmiddlewaretoken: '{{csrf_token}}','author_id':'{{owner.id}}'},
+            data: {csrfmiddlewaretoken: '{{csrf_token}}','blog_id':'{{ owner.id }}'},
             dataType:  'json',
             success: function(data) {
               if(data.subbed == true) {

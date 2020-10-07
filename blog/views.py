@@ -18,17 +18,16 @@ PAGINATE = 15
 
 class PostListView(ListView):
     model = Post
-    queryset = Post.objects.filter(status='published').order_by('-date_added')
+    queryset = Post.objects.filter(status='published').select_related('blog') \
+    .prefetch_related('blog__user').order_by('-date_added')
     paginate_by = PAGINATE
 
 
 def personal_feed(request):
 
-    subbed_on = Blog.objects.filter(subscriber=request.user)
+    subbed_on = Blog.objects.filter(subscriber=request.user).values('user')
     if subbed_on:
-        queryset = Post.objects.all()
-        for blog in subbed_on:
-            queryset = queryset.filter(blog__subscriber=request.user)
+        queryset = Post.objects.filter(blog__subscriber__in=subbed_on).select_related('blog__user')
         queryset = queryset.exclude(seen_by=request.user).order_by('-date_added')
     else:
         queryset = Post.objects.none()
@@ -108,27 +107,20 @@ class UserPostPage(ListView):
     template_name = 'blog/user_page.html'
 
     def get_queryset(self):
-        self.owner = get_object_or_404(User, username=self.kwargs['user'])
-        return Post.objects.filter(blog__user=self.owner).filter(
-            status='published').order_by('-date_added')
+        self.blog = get_object_or_404(Blog, id=self.kwargs['blog'])
+        return Post.objects.filter(blog=self.blog).filter(
+            status='published').prefetch_related('blog').order_by('-date_added')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['owner'] = get_object_or_404(User, username=self.kwargs['user'])
-        owner = context['owner']
-        context['blog'] = get_object_or_404(Blog, user=owner)
+        context['blog'] = self.blog.user
         return context
-
-
-def user_post_page(request, user_id):
-    posts = Post.objects.filter(blog__user__id=user_id)
-    return render(request, 'blog/user_page.html', {'object_list': posts})
 
 
 def add_sub_ajax(request):
     if request.is_ajax():
-        blog_author = int(request.POST['author_id'])
-        targeted_blog = Blog.objects.get(user=blog_author)
+        blog_id = int(request.POST['blog_id'])
+        targeted_blog = Blog.objects.get(id=blog_id)
         subs = targeted_blog.subscriber.all()
         if request.user not in subs:
             targeted_blog.subscriber.add(request.user)

@@ -3,11 +3,11 @@
 
 {% block content %}
 <script>
-    function addSub(user_id, counter) {
+    function addSub(blog_id, counter) {
     $.ajax({
             url:  '/posts/add_sub_ajax/',
             type:  'POST',
-            data: {csrfmiddlewaretoken: '{{csrf_token}}','author_id': user_id},
+            data: {csrfmiddlewaretoken: '{{csrf_token}}','blog_id': blog_id},
             dataType:  'json',
             success: function(data) {
               if(data.subbed == true) {
@@ -23,14 +23,14 @@
 <br>
 <ul class="list-group">
 
-{% for userr in object_list %}
+{% for blog in object_list %}
 <div>
     <li class="list-group-item">
-    <a href= '{% url "user_page" userr %}' class="btn btn-light btn-sm" style= "background-color: #7fb3d5; color:white" >{{userr.username}}</a>
-    {% if request.user not in userr.blog.subscriber.all  %}
-    <button class="add_sub{{ forloop.counter }} btn btn-sm sub" onclick="addSub({{userr.id}}, {{forloop.counter}})" id='add_sub{{forloop.counter}}'>Подписаться</button>
+    <a href= '{% url "user_page" blog.id %}' class="btn btn-light btn-sm" style= "background-color: #7fb3d5; color:white" >{{ blog }}</a>
+    {% if request.user not in blog.subscriber.all  %}
+    <button class="add_sub{{ forloop.counter }} btn btn-sm sub" onclick="addSub({{ blog.id }}, {{forloop.counter }})" id='add_sub{{forloop.counter}}'>Подписаться</button>
     {% else %}
-    <button class='add_sub{{ forloop.counter }} btn btn-sm sub' onclick='addSub({{userr.id}}, {{forloop.counter}})' id='add_sub{{forloop.counter}}'>Отписаться</button>
+    <button class='add_sub{{ forloop.counter }} btn btn-sm sub' onclick='addSub({{ blog.id }}, {{forloop.counter }})' id='add_sub{{forloop.counter}}'>Отписаться</button>
     {% endif %}
     </li>
 

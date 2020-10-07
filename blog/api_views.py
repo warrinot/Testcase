@@ -5,9 +5,7 @@ from .models import Post
 
 
 class PostApiViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows users to be viewed or edited.
-    """
-    queryset = Post.objects.all().order_by('date_added')
+    queryset = Post.objects.all().select_related('blog').order_by('date_added')
+
     serializer_class = PostSerializer
     permission_classes = [permissions.IsAuthenticated]

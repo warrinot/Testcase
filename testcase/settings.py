@@ -37,11 +37,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'users',
-    'blog',
+    
     'bootstrap4',
     'crispy_forms',
     'rest_framework',
+    'debug_toolbar',
+
+    'users',
+    'blog',
 
 ]
 
@@ -146,8 +149,6 @@ EMAIL_HOST_PASSWORD = cred.password
 EMAIL_PORT = 587"""
 
 REST_FRAMEWORK = {
-    # Use Django's standard `django.contrib.auth` permissions,
-    # or allow read-only access for unauthenticated users.
     'DEFAULT_PERMISSION_CLASSES': [],
     'TEST_REQUEST_DEFAULT_FORMAT': 'json',
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
@@ -155,5 +156,6 @@ REST_FRAMEWORK = {
 }
 if not os.environ.get('DJANGO_PRODUCTION') == 'True':
     from .settings_dev import *
+    MIDDLEWARE += ['debug_toolbar.middleware.DebugToolbarMiddleware']
 else:
     pass

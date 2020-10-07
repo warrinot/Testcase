@@ -19,7 +19,7 @@
   <div class="card-header">
 
 
-    <a href= '{% url "user_page" post.blog.user %}' class="btn btn-light btn-sm" >{{post.blog.user}}</a>
+    <a href= '{% url "user_page" post.blog.id %}' class="btn btn-light btn-sm" >{{post.blog.user}}</a>
     {{ post.date_added|date:'M d, Y H:i' }}
     <a class="post_title" href="{% url 'make_seen' post.id %}">Отметить прочитано</a>
     {% if post.blog.user == request.user or request.user.is_staff %}

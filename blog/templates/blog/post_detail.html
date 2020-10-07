@@ -16,7 +16,7 @@
 <div class="card">
   <div class="card-header">
 
-    <a href= "{% url 'user_page' object.blog.user %}" class="btn btn-light btn-sm">{{object.blog.user}}</a>
+    <a href= "{% url 'user_page' object.blog.id %}" class="btn btn-light btn-sm">{{object.blog.user}}</a>
     {{ post.date_added|date:'M d, Y H:i' }}
     <a class="post_title"href="{% url 'make_seen' object.id %}">Отметить прочитано</a>
 

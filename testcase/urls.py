@@ -2,6 +2,8 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
 from blog import api_views
+from django.conf import settings
+
 
 router = routers.DefaultRouter()
 router.register(r'posts', api_views.PostApiViewSet)
@@ -15,3 +17,9 @@ urlpatterns = [
     path('api/', include(router.urls))
 
 ]
+
+if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns = [
+    path('__debug__/', include(debug_toolbar.urls)),
+        ] + urlpatterns

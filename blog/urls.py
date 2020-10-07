@@ -12,7 +12,7 @@ urlpatterns = [
          name='post_update'),
     path('post/delete/<int:pk>', login_required(views.PostDeleteView.as_view()),
          name='post_delete'),
-    path('blogs/<user>/', login_required(views.UserPostPage.as_view()), name='user_page'),
+    path('blogs/<blog>/', login_required(views.UserPostPage.as_view()), name='user_page'),
     path('feed/', login_required(views.personal_feed), name='feed'),
     path('post/<int:post_id>/make_seen/', views.make_post_seen, name='make_seen'),
     path('posts/draft/', login_required(views.PostDraftView.as_view()), name='draft_posts'),
