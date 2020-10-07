@@ -79,18 +79,20 @@ class CreateNewPostTest(TestCase):
         self.valid_payload = {
             'title': 'Test title',
             'text': 'Test text',
-            'blog': self.user.blog.id
+            'blog': self.user.id
+        
         }
         self.invalid_payload = {
             'title': '',
-            'text': 'Test text',
-            'blog': int(self.user.blog.id)
+            'text': 'Test text',            
+            'blog': self.user.id
         }
 
     def test_create_valid_post(self):
         response = client.post(reverse('post-list'), data=json.dumps(
             self.valid_payload), content_type='application/json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
 
     def test_create_invalid_post(self):
         response = client.post(reverse('post-list'), data=json.dumps(
@@ -110,12 +112,12 @@ class UpdateSinglePostTest(TestCase):
         self.valid_payload = {
             'title': 'Test title updated',
             'text': 'Test text updated',
-            'blog': int(self.user.blog.id)
+            'blog': self.user.blog.id
         }
         self.invalid_payload = {
             'title': 1,
             'text': ['list instead of text'],
-            'blog': int(self.user.blog.id)
+            'blog': self.user.blog.id
         }
 
     def test_valid_update_post(self):
@@ -123,6 +125,7 @@ class UpdateSinglePostTest(TestCase):
                               data=json.dumps(self.valid_payload),
                               content_type='application/json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+
 
     def test_invalid_update_post(self):
         response = client.put(reverse('post-detail', args=(self.post2.pk, )),

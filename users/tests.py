@@ -46,6 +46,6 @@ class UsersListViewTest(TestCase):
         view.setup(request)
 
         queryset = view.get_queryset()
-        self.assertIn(first_user, queryset)
-        self.assertIn(second_user, queryset)
-        self.assertIn(third_user, queryset)
+        self.assertIn(first_user.blog, queryset)
+        self.assertIn(second_user.blog, queryset)
+        self.assertIn(third_user.blog, queryset)

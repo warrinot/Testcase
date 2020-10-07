@@ -95,7 +95,6 @@ class PersonalFeedViewTest(TestCase):
         request = self.factory.get(reverse('feed'))
         request.user = self.john
         response = views.personal_feed(request)
-        # print(response.content)
         self.assertIn(post_to_show.text.encode('utf-8'), response.content)
         self.assertNotIn(post_to_not_show.text.encode('utf-8'), response.content)
 
@@ -217,7 +216,7 @@ class UserPostPageTest(TestCase):
         request.user = self.paul
         view = views.UserPostPage()
         view.setup(request)
-        view.kwargs['user'] = self.john
+        view.kwargs['blog'] = self.john.blog.id
         queryset = view.get_queryset()
         self.assertIn(self.published_post_john, queryset)
         self.assertNotIn(self.published_post_paul, queryset)
@@ -228,8 +227,7 @@ class UserPostPageTest(TestCase):
         request.user = self.john
         view = views.UserPostPage()
         view.setup(request)
-        view.kwargs['user'] = self.john
+        view.kwargs['blog'] = self.john.blog.id
         view.object_list = view.get_queryset()
         context = view.get_context_data()
-        self.assertIn('owner', context)
         self.assertIn('blog', context)
