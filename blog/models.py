@@ -18,13 +18,14 @@ STATUS_CHOICES = (
 
 
 class Blog(models.Model):
+    name = models.CharField(max_length=255, default='', blank=True)
     user = models.OneToOneField(
         User, on_delete=models.CASCADE, related_name='blog')
     subscriber = models.ManyToManyField(
-        User, related_name='subscribers', blank=True)
+        User, related_name='subscriber', blank=True)
 
     def __str__(self):
-        return str(self.user) + '\'s blog'
+        return str(self.name) + '\'s blog'
 
 
 class Post(models.Model):
@@ -59,7 +60,7 @@ class Post(models.Model):
 @receiver(post_save, sender=User, dispatch_uid='user_created')
 def create_user_blog(sender, instance, created, **kwargs):
     if created:
-        blog = Blog.objects.create(user=instance)
+        blog = Blog.objects.create(name=instance.username, user=instance)
         blog.save()
 
 
