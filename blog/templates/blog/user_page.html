@@ -17,7 +17,7 @@
     $.ajax({
             url:  '/posts/add_sub_ajax/',
             type:  'POST',
-            data: {csrfmiddlewaretoken: '{{csrf_token}}','blog_id':'{{ owner.id }}'},
+            data: {csrfmiddlewaretoken: '{{csrf_token}}','blog_id':'{{ blog.id }}'},
             dataType:  'json',
             success: function(data) {
               if(data.subbed == true) {
