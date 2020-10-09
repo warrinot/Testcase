@@ -52,15 +52,3 @@
 .sub {
     float:right;
 }
-
-.footer-new {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    border-top: solid 1px lightgrey;
-    background-color: #7fb3d5;
-}
-
-.footer-text {
-    color: #fff;
-}
