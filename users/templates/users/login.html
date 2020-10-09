@@ -1,30 +1,29 @@
+{% extends 'blog/base.html' %}
+{% load bootstrap4 %}
 
-<body>
-<!-- Yandex.Metrika counter -->
-<script type="text/javascript" >
-   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-   m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
-   (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
 
-   ym(60935275, "init", {
-        clickmap:true,
-        trackLinks:true,
-        accurateTrackBounce:true,
-        webvisor:true
-   });
-</script>
-<noscript><div><img src="https://mc.yandex.ru/watch/60935275" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-<!-- /Yandex.Metrika counter -->
 {% block content %}
-{% if form.errors %}
-<p>Your username(email) and password didn't match. Please try again.</p>
-{% endif %}
-<form method="post" action="{% url 'login' %}">
-{% csrf_token %}
-{{ form.as_p }}
-<button name="submit">Log in</button>
 
-</form>
-<a href="{% url 'test_auth' %}">Login testuser</a>
+    <br>
+    <div class='container'>
+        {% if request.user.is_authenticated %}
+            <p> Вы уже залогинились </p>
+        {% else %}
+
+            {% if form.errors %}
+            <p>Ваш email и пароль не подошли. Попробуйте снова.</p>
+            {% endif %}
+            <form method="post" action="{% url 'login' %}">
+            
+                {% bootstrap_form form %}
+                {% csrf_token %}
+                <button class='btn btn-light' name="submit">Log in</button>
+
+            </form>
+            
+            <a href="{% url 'test_auth' %}">*Залогиниться как тестовый пользователь*</a>
+        {% endif %}
+
+    </div>
+
 {% endblock content %}
-</body>
