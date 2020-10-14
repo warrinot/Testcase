@@ -1,13 +1,9 @@
 from django.db import models
 from django.dispatch import receiver
 from django.db.models.signals import post_save
-from django.core.mail import send_mail
 from django.contrib.auth import get_user_model
-
-
-'''TODO:
-    Async function of sending mails
-'''
+from .tasks import post_created
+from django.urls import reverse
 
 
 User = get_user_model()
@@ -56,6 +52,9 @@ class Post(models.Model):
         super(Post, self).save(force_insert, force_update, *args, **kwargs)
         self.__original_status = self.status
 
+    def get_absolute_url(self):
+        return reverse('post_detail', args=[self.pk])
+
 
 @receiver(post_save, sender=User, dispatch_uid='user_created')
 def create_user_blog(sender, instance, created, **kwargs):
@@ -64,28 +63,17 @@ def create_user_blog(sender, instance, created, **kwargs):
         blog.save()
 
 
-# @receiver(post_save, sender=Post, dispatch_uid='post_created')
-# def send_email(sender, instance, created, **kwargs):
-#     if instance.status == 'published':
-#         subscribers = instance.blog.subscriber.all()
-#         senders_emails = []
-#         for sub in subscribers:
-#             senders_emails.append(str(sub.email))
-
-#         senderr = "Blog site"
-#         link = f'http://127.0.0.1:8000/post/{instance.pk}'
-#         if created:  # make sure it is new post and not edited.
-#             send_mail(
-#                 f'New post at {instance.blog}!',
-#                 '',
-#                 f'{senderr}',
-#                 senders_emails,
-#                 html_message=f'Link: \n <a href={link}>New post</a>')
-#         else:
-#             if instance.status_changed:
-#                 send_mail(
-#                     f'New post at {instance.blog}!!',
-#                     '',
-#                     f'{senderr}',
-#                     senders_emails,
-#                     html_message=f'Link: \n <a href={link}>New post</a>')
+@receiver(post_save, sender=Post, dispatch_uid='post_created')
+def send_email(sender, instance, created, **kwargs):
+    if instance.status == 'published':
+        subscribers = instance.blog.subscriber.all()
+        recipients = []
+        post_url = instance.get_absolute_url()
+        blog_name = instance.blog.name
+        for sub in subscribers:
+            recipients.append(str(sub.email))
+        if created:  # make sure it is new post and not edited.
+            post_created.delay(post_url, blog_name, recipients)
+        else:
+            if instance.status_changed:  # if post status changes from draft to published
+                post_created.delay(post_url, blog_name, recipients)
