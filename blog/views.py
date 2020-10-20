@@ -25,9 +25,9 @@ class PostListView(ListView):
 
 def personal_feed(request):
 
-    subbed_on = Blog.objects.filter(subscriber=request.user).values('user')
+    subbed_on = request.user.subscriber.all()
     if subbed_on:
-        queryset = Post.objects.filter(blog__subscriber__in=subbed_on).select_related('blog__user')
+        queryset = Post.objects.filter(blog__in=subbed_on).select_related('blog__user')
         queryset = queryset.exclude(seen_by=request.user).order_by('-date_added')
     else:
         queryset = Post.objects.none()
