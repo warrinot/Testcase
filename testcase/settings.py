@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['warrinot.ml']
 
@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'rest_framework',
     'debug_toolbar',
+    'kombu',
 
     'users',
     'blog',
@@ -159,6 +160,7 @@ REST_FRAMEWORK = {
     #     'rest_framework.parsers.JSONParser',)
 }
 
+BROKER_URL = 'django://'
 
 if not os.environ.get('DJANGO_PRODUCTION') == 'True':
     from .settings_dev import *
