@@ -19,7 +19,7 @@ PAGINATE = 15
 class PostListView(ListView):
     model = Post
     queryset = Post.objects.filter(status='published').select_related('blog') \
-    .prefetch_related('blog__user').order_by('-date_added')
+        .prefetch_related('blog__user').order_by('-date_added')
     paginate_by = PAGINATE
 
 
@@ -27,9 +27,7 @@ def personal_feed(request):
 
     subbed_on = Blog.objects.filter(subscriber=request.user).values('user')
     if subbed_on:
-        queryset = Post.objects.all().select_related('blog__user')
-        for blog in subbed_on:
-            queryset = queryset.filter(blog__subscriber=request.user)
+        queryset = Post.objects.filter(blog__subscriber__in=subbed_on).select_related('blog__user')
         queryset = queryset.exclude(seen_by=request.user).order_by('-date_added')
     else:
         queryset = Post.objects.none()
