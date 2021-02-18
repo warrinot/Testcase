@@ -28,10 +28,12 @@ class GetAllPostsTest(TestCase):
     def setUp(self):
         self.user = create_test_user()
         client.force_login(self.user)
-        Post.objects.create(title='Test title', text='Test text', blog=self.user.blog)
+        Post.objects.create(title='Test title',
+                            text='Test text', blog=self.user.blog)
         Post.objects.create(title='Test title second',
                             text='Test text second', blog=self.user.blog)
-        Post.objects.create(title='Test title third', text='Test text third', blog=self.user.blog)
+        Post.objects.create(title='Test title third',
+                            text='Test text third', blog=self.user.blog)
         Post.objects.create(title='Test title fourth',
                             text='Test text fourth', blog=self.user.blog)
 
@@ -51,7 +53,8 @@ class GetSinglePostTest(TestCase):
     def setUp(self):
         self.user = create_test_user()
         client.force_login(self.user)
-        self.post1 = Post.objects.create(title='Test title', text='Test text', blog=self.user.blog)
+        self.post1 = Post.objects.create(
+            title='Test title', text='Test text', blog=self.user.blog)
         self.post2 = Post.objects.create(
             title='Test title second', text='Test text second', blog=self.user.blog)
         self.post3 = Post.objects.create(title='Test title third',
@@ -60,7 +63,8 @@ class GetSinglePostTest(TestCase):
             title='Test title fourth', text='Test text fourth', blog=self.user.blog)
 
     def test_get_valid_single_post(self):
-        response = client.get(reverse('post-detail', kwargs={'pk': self.post1.pk}))
+        response = client.get(
+            reverse('post-detail', kwargs={'pk': self.post1.pk}))
         post = Post.objects.get(pk=self.post1.pk)
         serializer = PostSerializer(post)
         self.assertEqual(response.data, serializer.data)
@@ -104,7 +108,8 @@ class UpdateSinglePostTest(TestCase):
     def setUp(self):
         self.user = create_test_user()
         client.force_login(self.user)
-        self.post1 = Post.objects.create(title='Test title', text='Test text', blog=self.user.blog)
+        self.post1 = Post.objects.create(
+            title='Test title', text='Test text', blog=self.user.blog)
         self.post2 = Post.objects.create(
             title='Test title second', text='Test text second', blog=self.user.blog)
         self.valid_payload = {
@@ -137,12 +142,14 @@ class DeleteSinglePostTest(TestCase):
     def setUp(self):
         self.user = create_test_user()
         client.force_login(self.user)
-        self.post1 = Post.objects.create(title='Test title', text='Test text', blog=self.user.blog)
+        self.post1 = Post.objects.create(
+            title='Test title', text='Test text', blog=self.user.blog)
         self.post2 = Post.objects.create(
             title='Test title second', text='Test text second', blog=self.user.blog)
 
     def test_valid_delete_post(self):
-        response = client.delete(reverse('post-detail', kwargs={'pk': self.post2.pk}))
+        response = client.delete(
+            reverse('post-detail', kwargs={'pk': self.post2.pk}))
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
     def test_invalid_delete_post(self):

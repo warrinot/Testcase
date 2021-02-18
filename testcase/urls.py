@@ -7,7 +7,7 @@ from django.conf import settings
 
 router = routers.DefaultRouter()
 router.register(r'posts', api_views.PostApiViewSet)
-
+router.register(r'blogs', api_views.BlogApiViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
