@@ -160,7 +160,7 @@ REST_FRAMEWORK = {
     #     'rest_framework.parsers.JSONParser',)
 }
 
-BROKER_URL = 'django://'
+CELERY_TASK_ALWAYS_EAGER = True
 
 if not os.environ.get('DJANGO_PRODUCTION') == 'True':
     from .settings_dev import *
