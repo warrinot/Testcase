@@ -83,12 +83,12 @@ class CreateNewPostTest(TestCase):
         self.valid_payload = {
             'title': 'Test title',
             'text': 'Test text',
-            'blog': 1
+            'blog': self.user.blog.id
         }
         self.invalid_payload = {
             'title': '',
             'text': 'Test text',
-            'blog': 1
+            'blog': self.user.blog.id
         }
 
     def test_create_valid_post(self):
@@ -115,12 +115,12 @@ class UpdateSinglePostTest(TestCase):
         self.valid_payload = {
             'title': 'Test title updated',
             'text': 'Test text updated',
-            'blog': 1
+            'blog': self.user.blog.id
         }
         self.invalid_payload = {
             'title': 1,
             'text': ['list instead of text'],
-            'blog': 1
+            'blog': self.user.blog.id
         }
 
     def test_valid_update_post(self):
