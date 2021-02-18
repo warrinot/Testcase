@@ -167,7 +167,7 @@ if not os.environ.get('DJANGO_PRODUCTION') == 'True':
     from .settings_dev import *
     MIDDLEWARE += (
         'debug_toolbar.middleware.DebugToolbarMiddleware',
-        'debug_toolbar_force.middleware.ForceDebugToolbarMiddleware',
+        # 'debug_toolbar_force.middleware.ForceDebugToolbarMiddleware',
     )
 else:
     pass
