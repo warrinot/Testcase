@@ -3,7 +3,7 @@ import os
 DEBUG = True
 SECRET_KEY = '1'
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-ALLOWED_HOSTS = ['127.0.0.1', '0.0.0.0']
+ALLOWED_HOSTS = ['127.0.0.1', '0.0.0.0', 'localhost']
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',

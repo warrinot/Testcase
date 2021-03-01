@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
-from . import cred
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -23,9 +22,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['warrinot.ml']
+ALLOWED_HOSTS = ['warrinot.ml', '127.0.0.1', 'localhost']
 
 
 # Application definition
@@ -85,13 +84,13 @@ WSGI_APPLICATION = 'testcase.wsgi.application'
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'testcase',
-        'USER': 'testcase_admin',
-        'PASSWORD': cred.password_db,
-        'HOST': 'localhost',
-        'PORT': '',
+    "default": {
+        "ENGINE": os.environ.get("SQL_ENGINE", "django.db.backends.sqlite3"),
+        "NAME": os.environ.get("SQL_DATABASE", os.path.join(BASE_DIR, "db.sqlite3")),
+        "USER": os.environ.get("SQL_USER", "user"),
+        "PASSWORD": os.environ.get("SQL_PASSWORD", "password"),
+        "HOST": os.environ.get("SQL_HOST", "localhost"),
+        "PORT": os.environ.get("SQL_PORT", "5432"),
     }
 }
 
@@ -163,11 +162,15 @@ REST_FRAMEWORK = {
 
 CELERY_TASK_ALWAYS_EAGER = True
 
-if not os.environ.get('DJANGO_PRODUCTION') == 'True':
-    from .settings_dev import *
-    MIDDLEWARE += (
-        'debug_toolbar.middleware.DebugToolbarMiddleware',
-        # 'debug_toolbar_force.middleware.ForceDebugToolbarMiddleware',
-    )
-else:
-    pass
+# if not os.environ.get('DJANGO_PRODUCTION') == 'True':
+#     from .settings_dev import *
+#     MIDDLEWARE += (
+#         'debug_toolbar.middleware.DebugToolbarMiddleware',
+#         # 'debug_toolbar_force.middleware.ForceDebugToolbarMiddleware',
+#     )
+# else:
+#     pass
+STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static/')
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+]

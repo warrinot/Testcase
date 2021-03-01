@@ -12,3 +12,5 @@ static/rest_framework/
 
 celery_up.bat
 erl_crash.dump
+
+.env.dev

@@ -25,6 +25,7 @@ class Command(BaseCommand):
             mod = m.objects.all()
             if m == User:
                 mod = mod.exclude(email='warrinot@gmail.com')
+                mod = mod.exclude(email='ahhipiro@gmail.com')
                 mod = mod.exclude(email='test@test.com')
 
             mod.delete()
