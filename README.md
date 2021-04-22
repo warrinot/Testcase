@@ -12,4 +12,4 @@
 
 - Дополнительно: базовое  CRUD API, тесты(покрыто 90%).
  
-Реализовано с помощью nginx и gunicorn тут: https://warrinot.ml/
+Реализовано с помощью nginx и gunicorn тут: https://warrinot.ml/feed/
