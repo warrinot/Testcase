@@ -1,6 +1,5 @@
 from rest_framework import viewsets
 from rest_framework import permissions
-from rest_framework import serializers
 from .serializers import PostSerializer, BlogSerializer
 from .models import Post, Blog
 

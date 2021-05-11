@@ -21,6 +21,7 @@ class Command(BaseCommand):
     def handle(self, *args, **kwargs):
         self.stdout.write("Deleting old data...")
         models = [User, Post]
+        User.objects.create_user(username='Test', email='test@test.com', password='12345678aA')
         for m in models:
             mod = m.objects.all()
             if m == User:

@@ -14,3 +14,5 @@ celery_up.bat
 erl_crash.dump
 
 .env.dev
+.env.prod
+.env.prod.db

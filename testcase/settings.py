@@ -22,7 +22,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = int(os.environ.get("DEBUG", default=0))
 
 ALLOWED_HOSTS = ['warrinot.ml', '127.0.0.1', 'localhost']
 
@@ -41,13 +41,14 @@ INSTALLED_APPS = [
     'bootstrap4',
     'crispy_forms',
     'rest_framework',
-    'debug_toolbar',
     'kombu',
 
     'users',
     'blog',
 
 ]
+if DEBUG:
+    INSTALLED_APPS.append('debug_toolbar')
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -139,10 +140,8 @@ USE_TZ = True
 
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'media/')
 
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 SITE_ID = 2
@@ -162,14 +161,7 @@ REST_FRAMEWORK = {
 
 CELERY_TASK_ALWAYS_EAGER = True
 
-# if not os.environ.get('DJANGO_PRODUCTION') == 'True':
-#     from .settings_dev import *
-#     MIDDLEWARE += (
-#         'debug_toolbar.middleware.DebugToolbarMiddleware',
-#         # 'debug_toolbar_force.middleware.ForceDebugToolbarMiddleware',
-#     )
-# else:
-#     pass
+
 STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static/')
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),

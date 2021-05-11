@@ -5,7 +5,6 @@ from django.contrib.auth import authenticate
 from .. import views
 from django.urls import reverse
 from django.http import Http404
-from django.test import Client
 
 
 User = get_user_model()
